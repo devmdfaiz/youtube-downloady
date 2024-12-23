@@ -2,20 +2,121 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* CSS: .bg-gradient { background: var(--gradient) } */
+    --gradient: url(/deep-dusk-002.jpg);
+
+    --background: 2 50.7% 4.24%;
+    --foreground: 2 7.800000000000001% 97.65%;
+
+    --muted: 2 39% 15.9%;
+    --muted-foreground: 2 7.800000000000001% 55.3%;
+
+    --popover: 2 49.4% 6.890000000000001%;
+    --popover-foreground: 2 7.800000000000001% 97.65%;
+
+    --card: 2 49.4% 6.890000000000001%;
+    --card-foreground: 2 7.800000000000001% 97.65%;
+
+    --border: 2 39% 15.9%;
+    --input: 2 39% 15.9%;
+
+    --primary: 2 78% 53%;
+    --primary-foreground: 2 7.800000000000001% 5.300000000000001%;
+
+    --secondary: 2 39% 15.9%;
+    --secondary-foreground: 2 7.800000000000001% 97.65%;
+
+    --accent: 2 39% 15.9%;
+    --accent-foreground: 2 7.800000000000001% 97.65%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 2 7.800000000000001% 97.65%;
+
+    --ring: 2 78% 53%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.container {
+  min-height: calc(100vh - 61px);
+  width: 1536px;
+}
+
+@media (max-width: 1536px) {
+  .container {
+    width: 1280px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .container {
+    width: 1024px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    width: 768px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 640px;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    width: 100%;
+  }
+}
+
+@media (min-height: 1023px) {
+  .container {
+    min-height: calc(100vh - 70px);
+  }
+}
+
+/* tiptap styling */
+.tiptap h1 {
+  @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+}
+.tiptap h2 {
+  @apply scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0;
+}
+.tiptap h3 {
+  @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+}
+.tiptap h4 {
+  @apply scroll-m-20 text-xl font-semibold tracking-tight;
+}
+.tiptap p {
+  @apply leading-7 [&:not(:first-child)]:mt-6;
+}
+.tiptap blockquote {
+  @apply mt-6 border-l-2 pl-6 italic;
+}
+.tiptap ul {
+  @apply my-6 ml-6 list-disc [&>li]:mt-2;
+}
+.tiptap ol {
+  @apply my-6 ml-6 list-decimal [&>li]:mt-2;
+}
+.tiptap a {
+  @apply font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer;
 }

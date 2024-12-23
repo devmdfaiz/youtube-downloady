@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+import { Toaster } from "@/components/ui/toaster";
+import { DownloaderContextProvider } from "@/context/download-context";
+import AuthProvider from "@/context/next-auth";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,9 +29,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased ${
+          process.env.NODE_ENV !== "production" && "debug-screens"
+        }`}
       >
-        {children}
+        <AuthProvider>
+          <DownloaderContextProvider>{children}</DownloaderContextProvider>
+        </AuthProvider>
+        <Toaster />
       </body>
     </html>
   );
