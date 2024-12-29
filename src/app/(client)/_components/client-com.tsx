@@ -21,6 +21,7 @@ import { DownloaderContext } from "@/context/download-context";
 import { TypographyH2, TypographySmall } from "@/components/ui/typography";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
+import { cachedScriptData, fetchScriptData } from "@/lib/fetch";
 
 const formSchema = z.object({
   url: z.string().url(),
@@ -100,39 +101,51 @@ export function DownloaderForm() {
   );
 }
 
-export default function BodyAdScript({
-  longBannerAd_468_60,
-  bannerAd_300_250,
-}: {
+interface AdsProps {
   bannerAd_300_250: string;
   longBannerAd_468_60: string;
-}) {
+}
+/**
+ * Hey, fellow developers, I make some adjustments here
+ * according to next js 15 to work better with ads and this part is not covered and thats all
+ * @param param0
+ * @returns
+ */
+export default function BodyAdScript() {
   const [isClient, setIsClient] = useState(false);
+  const [ads, setAds] = useState<AdsProps | undefined>({
+    bannerAd_300_250: "",
+    longBannerAd_468_60: "",
+  });
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  return (
-    <>
-      {isClient && (
-        <div className="w-full h-fit flex items-center justify-center mb-6">
-          <div className="above-form-add w-[468px] h-[60px] hidden sm:block">
-            {longBannerAd_468_60 && (
-              <div
-                dangerouslySetInnerHTML={{ __html: longBannerAd_468_60 }}
-              ></div>
-            )}
-          </div>
+  useEffect(() => {
+    async function fetchAds() {
+      const res = await cachedScriptData(); // Replace this with your actual fetch logic
+      setAds(res.data?.adScript);
+    }
+    fetchAds();
+  }, []);
 
-          <div className="above-form-add w-[300px] h-[250px] sm:hidden">
-            {bannerAd_300_250 && (
-              <div dangerouslySetInnerHTML={{ __html: bannerAd_300_250 }}></div>
-            )}
-          </div>
-        </div>
-      )}
-    </>
+  return (
+    <div className="w-full h-fit flex items-center justify-center mb-6">
+      <div className="above-form-add w-[468px] h-[60px] hidden sm:block">
+        {isClient && ads && ads.longBannerAd_468_60 && (
+          <div
+            dangerouslySetInnerHTML={{ __html: ads.longBannerAd_468_60 }}
+          ></div>
+        )}
+      </div>
+
+      <div className="above-form-add w-[300px] h-[250px] sm:hidden">
+        {isClient && ads && ads.bannerAd_300_250 && (
+          <div dangerouslySetInnerHTML={{ __html: ads.bannerAd_300_250 }}></div>
+        )}
+      </div>
+    </div>
   );
 }
 

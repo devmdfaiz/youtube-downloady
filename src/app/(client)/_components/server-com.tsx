@@ -5,12 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  FAQItem,
-  TGuide,
-  THeroContent,
-  TTestimonials,
-} from "@/lib/database";
+import { FAQItem, TGuide, THeroContent, TTestimonials } from "@/lib/database";
 import BodyAdScript, { DownloaderForm } from "./client-com";
 import { TypographyH2 } from "@/components/ui/typography";
 import {
@@ -38,13 +33,12 @@ export function Hero({
           {content.title}
         </CardTitle>
         <br />
-        <CardDescription>{content.description}</CardDescription>
+        <CardDescription className="text-center">
+          {content.description}
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <BodyAdScript
-          bannerAd_300_250={bannerAd_300_250}
-          longBannerAd_468_60={longBannerAd_468_60}
-        />
+        <BodyAdScript />
         <DownloaderForm />
       </CardContent>
     </Card>

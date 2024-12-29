@@ -48,7 +48,6 @@ async function fetchHomeData(path: string): Promise<CacheHome> {
 
 const cachedHomeData = cache(fetchHomeData);
 
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const path = (await params).path;
 
